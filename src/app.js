@@ -1,18 +1,17 @@
 // require express
 const express = require("express");
 const bodyParser = require("body-parser");
-// const router = require("./handlers/index");
 const path = require("path");
-
-// set up server
+const handlers = require("./handlers/index");
+// set up new instance of express
 const app = express();
 
-// tell express to use the routes in the index.js file
-const router = express.Router();
-// app.use(router);
-// activate
+// serve static files from the public folder at the root
+app.use(express.static(path.join(__dirname, "..", "public")));
+
+// activate bodyParser to enable transfer of json
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(handlers);
 
 module.exports = app;
